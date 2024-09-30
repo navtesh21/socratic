@@ -17,11 +17,10 @@ export const executeCode = async (code: string, testcases: test[]) => {
 
   try {
     const batchSubmissions = await submitBatchToJudge0(submissions);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const tokens = batchSubmissions.map((sub: any) => sub.token);
+    const tokens = batchSubmissions.map((sub:any) => sub.token);
 
-    const results = await getBatchSubmissionResults(tokens);
-    return results.submissions;
+    const batchResults = await getBatchSubmissionResults(tokens);
+    return batchResults.submissions;
   } catch (error) {
     console.error("Error executing code:", error);
   }
@@ -35,7 +34,7 @@ async function submitBatchToJudge0(submissions: sub[]) {
       headers: {
         "content-type": "application/json",
         "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
-        "x-rapidapi-key": "6963af567emsh116854882431c7dp1271d3jsn71c401ef3e22",
+        "x-rapidapi-key": "5d70440795msh2d446f6248d5fc4p1e5efejsnaf759f693b9a",
       },
       body: JSON.stringify({ submissions }),
     }
@@ -52,9 +51,10 @@ async function getBatchSubmissionResults(tokens: string[]) {
     method: "GET",
     headers: {
       "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
-      "x-rapidapi-key": "6963af567emsh116854882431c7dp1271d3jsn71c401ef3e22",
+      "x-rapidapi-key": "5d70440795msh2d446f6248d5fc4p1e5efejsnaf759f693b9a",
     },
   });
   const result = await response.json();
+  console.log("res", result);
   return result;
 }
