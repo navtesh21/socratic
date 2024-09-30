@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import CodeEditorWindow from "../components/Editor";
 import Chat from "../components/Chat";
 import { executeCode } from "@/lib/actions";
@@ -22,6 +21,7 @@ interface result {
 export default function Component() {
   const [activeTestCase, setActiveTestCase] = useState<string | null>(null);
   const [code, setCode] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [testcases, setTestcases] = useState([
     { TestCase: "console.log('madarchod')" },
     { TestCase: "console.log('madrid')" },
