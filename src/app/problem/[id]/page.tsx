@@ -32,7 +32,6 @@ export default function Component() {
 
   const handleTestCaseClick = (testCase: string) => {
     setActiveTestCase(testCase);
-    // Here you would typically load the test case data
   };
 
   const compileCode = async () => {
@@ -56,7 +55,6 @@ export default function Component() {
           would go. You can provide details about the challenge, constraints,
           and examples here.
         </p>
-        {/* Add more content as needed */}
       </div>
 
       {/* Code Editor and Test Cases Section */}

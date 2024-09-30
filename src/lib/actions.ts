@@ -18,7 +18,7 @@ export const executeCode = async (code: string, testcases: test[]) => {
   try {
     const batchSubmissions = await submitBatchToJudge0(submissions);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const tokens = batchSubmissions.map((sub:any) => sub.token);
+    const tokens = batchSubmissions.map((sub: any) => sub.token);
 
     const results = await getBatchSubmissionResults(tokens);
     return results.submissions;
@@ -58,4 +58,3 @@ async function getBatchSubmissionResults(tokens: string[]) {
   const result = await response.json();
   return result;
 }
-
