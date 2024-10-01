@@ -23,10 +23,22 @@ export default function Component() {
   const [code, setCode] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [testcases, setTestcases] = useState([
-    { TestCase: "console.log('madarchod')" },
-    { TestCase: "console.log('madrid')" },
-    { TestCase: "console.log('hello')" },
-    { TestCase: "console.log('hello')" },
+    {
+      TestCase:
+        "arr = [1, 3, 5, 7, 9, 11, 13, 15]  \nassert binary_search(arr, 7) == 3  \nprint(binary_search(arr, 7))",
+    },
+    {
+      TestCase:
+        "arr = [1, 3, 5, 7, 9, 11, 13, 15]  \nassert binary_search(arr, 1) == 0",
+    },
+    {
+      TestCase:
+        "arr = [1, 3, 5, 7, 9, 11, 13, 15]  \nassert binary_search(arr, 4) == -1",
+    },
+    {
+      TestCase:
+        "arr = [1, 3, 5, 7, 9, 11, 13, 15]  \nassert binary_search(arr, 15) == 7",
+    },
   ]);
   const [results, setResults] = useState<result[] | []>([]);
 
@@ -93,7 +105,7 @@ export default function Component() {
                 {results.length > 0 && (
                   <p className="font-normal py-2">
                     <span className="font-bold"> Output:</span>{" "}
-                     {results[parseInt(activeTestCase.slice(-1)) - 1]?.stdout}
+                    {results[parseInt(activeTestCase.slice(-1)) - 1]?.stdout}
                   </p>
                 )}
                 <TestcaseEditor
