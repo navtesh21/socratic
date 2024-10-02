@@ -6,6 +6,8 @@ import CodeEditorWindow from "../components/Editor";
 import Chat from "../components/Chat";
 import { executeCode } from "@/lib/actions";
 import TestcaseEditor from "../components/TestcaseEditor";
+import Problem from "../components/Problem";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface result {
   stdout: string;
@@ -60,18 +62,16 @@ export default function Component() {
   return (
     <div className="flex h-screen mt-10">
       {/* Problem Description Section */}
-      <div className="w-[40%] p-6 bg-background overflow-auto">
-        <h1 className="text-2xl font-bold mb-4">Problem Title</h1>
-        <p className="mb-4">
-          This is where the problem description and any related information
-          would go. You can provide details about the challenge, constraints,
-          and examples here.
-        </p>
-      </div>
+      <ScrollArea className="h-[90vh] overflow-y-auto w-[45%]  m-1">
+        <div className="p-4 bg-background ">
+          {" "}
+          <Problem />
+        </div>
+      </ScrollArea>
 
       {/* Code Editor and Test Cases Section */}
-      <div className="w-[60%] flex flex-col bg-muted">
-        <div className="flex-grow p-6">
+      <div className="w-[55%] flex flex-col bg-muted h-full">
+        <div className="flex-grow p-3">
           <div className="bg-background border rounded-md p-4 flex-col flex gap-4">
             <CodeEditorWindow onChange={onChange} code={code} />
 
@@ -100,13 +100,11 @@ export default function Component() {
               </Button>
             </div>
             {activeTestCase && (
-              <div className=" p-2">
-                <h2 className="font-semibold pb-2">{activeTestCase}</h2>
+              <div className=" px-2">
                 {results.length > 0 && (
                   <p className="font-normal py-2">
-                    <span className="font-bold"> Testcase:</span>{" "}
                     {results[parseInt(activeTestCase.slice(-1)) - 1]?.stderr ? (
-                      <p className="text-red-600 text-sm">{`Failed,\nError:${
+                      <p className="text-red-600 text-sm">{`Error:${
                         results[parseInt(activeTestCase.slice(-1)) - 1].stderr
                       }`}</p>
                     ) : (
