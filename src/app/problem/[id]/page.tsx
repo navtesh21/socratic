@@ -58,7 +58,7 @@ export default function Component() {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen mt-10">
       {/* Problem Description Section */}
       <div className="w-[40%] p-6 bg-background overflow-auto">
         <h1 className="text-2xl font-bold mb-4">Problem Title</h1>
