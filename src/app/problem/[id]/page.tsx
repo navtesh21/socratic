@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import CodeEditorWindow from "../components/Editor";
 import Chat from "../components/Chat";
 import { executeCode } from "@/lib/actions";
@@ -22,17 +21,29 @@ interface result {
 export default function Component() {
   const [activeTestCase, setActiveTestCase] = useState<string | null>(null);
   const [code, setCode] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [testcases, setTestcases] = useState([
-    { TestCase: "console.log('madarchod')" },
-    { TestCase: "console.log('madrid')" },
-    { TestCase: "console.log('hello')" },
-    { TestCase: "console.log('hello')" },
+    {
+      TestCase:
+        "arr = [1, 3, 5, 7, 9, 11, 13, 15]  \nassert binary_search(arr, 7) == 3  \nprint(binary_search(arr, 7))",
+    },
+    {
+      TestCase:
+        "arr = [1, 3, 5, 7, 9, 11, 13, 15]  \nassert binary_search(arr, 1) == 0",
+    },
+    {
+      TestCase:
+        "arr = [1, 3, 5, 7, 9, 11, 13, 15]  \nassert binary_search(arr, 4) == -1",
+    },
+    {
+      TestCase:
+        "arr = [1, 3, 5, 7, 9, 11, 13, 15]  \nassert binary_search(arr, 15) == 7",
+    },
   ]);
   const [results, setResults] = useState<result[] | []>([]);
 
   const handleTestCaseClick = (testCase: string) => {
     setActiveTestCase(testCase);
-    // Here you would typically load the test case data
   };
 
   const compileCode = async () => {
@@ -56,7 +67,6 @@ export default function Component() {
           would go. You can provide details about the challenge, constraints,
           and examples here.
         </p>
-        {/* Add more content as needed */}
       </div>
 
       {/* Code Editor and Test Cases Section */}
@@ -95,7 +105,7 @@ export default function Component() {
                 {results.length > 0 && (
                   <p className="font-normal py-2">
                     <span className="font-bold"> Output:</span>{" "}
-                     {results[parseInt(activeTestCase.slice(-1)) - 1]?.stdout}
+                    {results[parseInt(activeTestCase.slice(-1)) - 1]?.stdout}
                   </p>
                 )}
                 <TestcaseEditor

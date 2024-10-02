@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import Editor from "@monaco-editor/react";
 
@@ -8,7 +8,7 @@ const TestcaseEditor = ({ code }: { code: string }) => {
       <Editor
         height="10vh"
         width={`100%`}
-        language={"javascript"}
+        language={"python"}
         value={code}
         theme="vs-dark"
       />
