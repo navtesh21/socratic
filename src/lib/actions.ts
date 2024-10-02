@@ -4,13 +4,13 @@ interface test {
 }
 
 interface sub {
-  language_id: number; // JavaScript (Node.js 12.14.0)
+  language_id: number;
   source_code: string;
   stdin: string;
 }
 export const executeCode = async (code: string, testcases: test[]) => {
   const submissions = testcases.map((test) => ({
-    language_id: 71, // JavaScript (Node.js 12.14.0)
+    language_id: 71, //python
     source_code: `${code}\n${test.TestCase}`,
     stdin: "",
     command_line_arguments: "-Wa",
