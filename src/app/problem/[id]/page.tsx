@@ -25,7 +25,7 @@ export default function Component() {
   const [testcases, setTestcases] = useState([
     {
       TestCase:
-        "arr = [1, 3, 5, 7, 9, 11, 13, 15]  \nassert binary_search(arr, 7) == 3  \nprint(binary_search(arr, 7))",
+        "arr = [1, 3, 5, 7, 9, 11, 13, 15]  \nassert binary_search(arr, 7) == 0 ",
     },
     {
       TestCase:
@@ -72,10 +72,10 @@ export default function Component() {
       {/* Code Editor and Test Cases Section */}
       <div className="w-[60%] flex flex-col bg-muted">
         <div className="flex-grow p-6">
-          <div className="bg-background border rounded-md h-full p-4 flex-col flex">
+          <div className="bg-background border rounded-md p-4 flex-col flex gap-4">
             <CodeEditorWindow onChange={onChange} code={code} />
 
-            <div className="flex space-x-4 mb-8 justify-between">
+            <div className="flex space-x-4 justify-between">
               <div className="space-x-4">
                 {["TestCase1", "TestCase2", "TestCase3", "TestCase4"].map(
                   (testCase) => (
@@ -104,8 +104,14 @@ export default function Component() {
                 <h2 className="font-semibold pb-2">{activeTestCase}</h2>
                 {results.length > 0 && (
                   <p className="font-normal py-2">
-                    <span className="font-bold"> Output:</span>{" "}
-                    {results[parseInt(activeTestCase.slice(-1)) - 1]?.stdout}
+                    <span className="font-bold"> Testcase:</span>{" "}
+                    {results[parseInt(activeTestCase.slice(-1)) - 1]?.stderr ? (
+                      <p className="text-red-600 text-sm">{`Failed,\nError:${
+                        results[parseInt(activeTestCase.slice(-1)) - 1].stderr
+                      }`}</p>
+                    ) : (
+                      "Passed"
+                    )}
                   </p>
                 )}
                 <TestcaseEditor

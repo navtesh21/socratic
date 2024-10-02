@@ -13,6 +13,7 @@ export const executeCode = async (code: string, testcases: test[]) => {
     language_id: 71, // JavaScript (Node.js 12.14.0)
     source_code: `${code}\n${test.TestCase}`,
     stdin: "",
+    command_line_arguments: "-Wa",
   }));
   try {
     const batchSubmissions = await submitBatchToJudge0(submissions);
@@ -65,7 +66,7 @@ async function pollForBatchResults(
 ) {
   for (let i = 0; i < maxAttempts; i++) {
     const results = await getBatchSubmissionResults(tokens);
-    if (results.submissions.every((result:any) => result.status.id > 2)) {
+    if (results.submissions.every((result: any) => result.status.id > 2)) {
       return results;
     }
     await new Promise((resolve) => setTimeout(resolve, delay));

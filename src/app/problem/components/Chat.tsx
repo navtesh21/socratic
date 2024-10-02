@@ -14,8 +14,6 @@ function Chat() {
     const handleSendMessage = () => {
         if (userInput.trim()) {
           setChatMessages([...chatMessages, { role: "user", content: userInput }])
-          // Here you would typically send the message to an AI service and get a response
-          // For now, we'll just simulate an AI response
           setTimeout(() => {
             setChatMessages((prev) => [
               ...prev,
