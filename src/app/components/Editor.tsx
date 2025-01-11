@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Editor from "@monaco-editor/react";
 
-const CodeEditorWindow = ({ onChange, language, code }:{onChange:(value:string | undefined) => void,language?:string,code:string}) => {
+const CodeEditorWindow = ({ onChange, language, code ,defaultValue}:{onChange:(value:string | undefined) => void,language?:string,code:string,defaultValue?:string}) => {
   const [value, setValue] = useState(code || "");
 
   const handleEditorChange = (value:string | undefined) => {
     setValue(value || "");
     onChange(value);
   };
+
+  useEffect(() => {
+    setValue(code || "");
+  }, [code]);
+  
 
   return (
     <div className="overlay rounded-md overflow-hidden w-full h-full shadow-4xl">
@@ -18,7 +23,7 @@ const CodeEditorWindow = ({ onChange, language, code }:{onChange:(value:string |
         language={language || "python"}
         value={value}
         theme="vs-dark"
-        defaultValue="# some comment"
+        defaultValue={defaultValue || ""}
         onChange={handleEditorChange}
       />
     </div>

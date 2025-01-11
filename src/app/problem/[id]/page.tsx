@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import CodeEditorWindow from "../components/Editor";
-import Chat from "../components/Chat";
+import CodeEditorWindow from "../../components/Editor";
+import Chat from "../../components/Chat";
 import { executeCode } from "@/lib/actions";
-import TestcaseEditor from "../components/TestcaseEditor";
-import Problem from "../components/Problem";
+import TestcaseEditor from "../../components/TestcaseEditor";
+import Problem from "../../components/Problem";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import getSocket from "@/lib/socket";
 
 interface result {
   stdout: string;
@@ -20,9 +23,46 @@ interface result {
   status: { id: number; description: string };
 }
 
-export default function Component() {
+export default function Component({ params }: { params: { id: string } }) {
+  const data = useQuery({
+    queryKey: ["todos"],
+    queryFn: async () => {
+      try {
+        const res = await axios.post("/api/problem", { slug: params.id });
+
+        const response = await res.data;
+        return response;
+      } catch (error) {
+        console.log(error);
+        return [];
+      }
+    },
+  });
+
+  let socket = useMemo(() => {
+    const socketInstance = getSocket();
+    return socketInstance;
+  }, []);
+
+  // socket instance
+  useEffect(() => {
+    socket.connect();
+
+    socket.on("connect", () => {
+      console.log("Connected to server");
+    });
+
+    socket.on("message", (data) => {
+      console.log(data, "message");
+    });
+
+    return () => {
+      socket.close();
+    };
+  }, []);
+
   const [activeTestCase, setActiveTestCase] = useState<string | null>(null);
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState(data.data?.codeSnippets[3].code || "");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [testcases, setTestcases] = useState([
     {
@@ -50,6 +90,7 @@ export default function Component() {
 
   const compileCode = async () => {
     const testResults = await executeCode(code, testcases);
+
     setResults(testResults);
   };
 
@@ -60,12 +101,12 @@ export default function Component() {
   };
 
   return (
-    <div className="flex h-screen mt-10">
+    <div className="flex h-screen mt-16">
       {/* Problem Description Section */}
       <ScrollArea className="h-[90vh] overflow-y-auto w-[45%]  m-1">
         <div className="p-4 bg-background ">
           {" "}
-          <Problem />
+          <Problem data={data.data} />
         </div>
       </ScrollArea>
 
@@ -117,6 +158,19 @@ export default function Component() {
                     testcases[parseInt(activeTestCase.slice(-1)) - 1].TestCase
                   }
                 />
+                <button
+                  onClick={() => {
+                    if (socket.connected) {
+                      socket.emit("message", "Hello from client");
+                      console.log("Socket ID:", socket.id);
+                    } else {
+                      console.log("Socket is not connected");
+                    }
+                  }}
+                >
+                  {" "}
+                  click
+                </button>
               </div>
             )}
           </div>

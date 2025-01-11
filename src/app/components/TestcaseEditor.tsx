@@ -4,7 +4,7 @@ import Editor from "@monaco-editor/react";
 
 const TestcaseEditor = ({ code }: { code: string }) => {
   return (
-    <div className=" overlay rounded-md overflow-hidden w-[70%] h-full shadow-4xl">
+    <div className=" overlay rounded-md overflow-hidden w-[70%] h-full shadow-4xl mt-4">
       <Editor
         height="20vh"
         width={`100%`}
