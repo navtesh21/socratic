@@ -17,7 +17,7 @@ import { InfoIcon, LinkIcon } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
-import { useToast } from "@/Hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 export default function CreateContestPage() {
   const [leetcodeUrl, setLeetcodeUrl] = useState("");
