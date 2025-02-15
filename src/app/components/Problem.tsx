@@ -1,5 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { AlertCircle, BookOpen, Code2, FileText } from "lucide-react";
+import { AlertCircle, Book, BookOpen, Code2, FileText } from "lucide-react";
 import React from "react";
 import DOMPurify from 'dompurify';
 
@@ -33,7 +33,9 @@ function Problem({data}: {data: any}) {
 
      
       <div className="space-y-2">
-        <h2 className="text-2xl font-semibold">Explanation</h2>
+        <h2 className="text-2xl font-semibold">
+          Hints
+          </h2>
         <p>
           {data?.hints.map((hint: string, index: number) => {
             return (

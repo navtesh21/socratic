@@ -39,13 +39,7 @@ export default function CreateContestPage() {
       time_limit: string;
     }) => {
       console.log(user?.id);
-      if (!user?.id) {
-        toast({
-          title: "Not Authorized ",
-          description: "Please Sign in",
-        });
-        return
-      }
+    
       const data = await axios.post(
         `${process.env.URL || "https://socratic-backend.onrender.com"}/createQuest`,
         {
@@ -90,6 +84,13 @@ export default function CreateContestPage() {
 
   const handleCreateContest = (e: React.FormEvent) => {
     e.preventDefault();
+      if (!user?.id) {
+        toast({
+          title: "Not Authorized ",
+          description: "Please Sign in",
+        });
+        return
+      }
     if (!leetcodeUrl || !contestDuration) {
       toast({
         title: "Invalid Input",

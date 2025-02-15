@@ -73,6 +73,9 @@ function Page({ params }: { params: { id: string } }) {
     if (!localStorage.getItem(params.id)) {
       setShowModal(true);
     }
+
+
+  
   }, []);
 
 
@@ -93,7 +96,7 @@ function Page({ params }: { params: { id: string } }) {
   return (
     <div className="flex h-screen mt-16">
       {/* Problem Description Section */}
-      {!showModal && <TimerNavbar totalTime={time!} challengeName={data.data?.title} userName="navtesh" timeLimit={parseInt(data.data?.time_limit) * 60} />}
+      {!showModal && <TimerNavbar totalTime={time!} challengeName={data.data?.title} userName={user?.firstName!} timeLimit={parseInt(data.data?.time_limit) * 60} />}
       <ChallengeJoinModal
         challengeName={data.data?.title}
         timeLimit={data.data?.time_limit}
@@ -115,7 +118,7 @@ function Page({ params }: { params: { id: string } }) {
           <div className="bg-background border rounded-md p-4 flex-col flex gap-4">
             <CodeEditorWindow onChange={onChange} code={code} />
 
-            <TestCase code={code} />
+            <TestCase code={code} data={data.data} />
           </div>
         </div>
       </div>
