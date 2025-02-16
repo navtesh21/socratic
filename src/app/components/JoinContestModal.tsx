@@ -14,7 +14,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Clock, AlertTriangle } from "lucide-react";
 import axios from "axios";
-import { useUser } from "@clerk/nextjs";
+import { SignInButton, useUser, SignedOut } from "@clerk/nextjs";
 import { Socket } from "socket.io-client";
 
 interface ChallengeJoinModalProps {
@@ -24,7 +24,7 @@ interface ChallengeJoinModalProps {
   setIsOpen: (isOpen: boolean) => void;
   contestId: string;
   userId: string | undefined;
-  socket:Socket
+  socket: Socket;
 }
 
 export default function ChallengeJoinModal({
@@ -34,19 +34,22 @@ export default function ChallengeJoinModal({
   setIsOpen,
   contestId,
   userId,
-  socket
+  socket,
 }: ChallengeJoinModalProps) {
   const [error, setError] = useState<string | null>(null);
-  
+
   const handleJoin = async () => {
     if (!userId) {
       setError("Please login to join the challenge");
       return;
     }
-    const data = await axios.post(`${process.env.URL ||"https://socratic-backend.onrender.com"}/joinQuest`, {
-     questId: contestId,
-      userId,
-    });
+    const data = await axios.post(
+      `${process.env.URL || "https://socratic-backend.onrender.com"}/joinQuest`,
+      {
+        questId: contestId,
+        userId,
+      }
+    );
 
     if (data.data.status != 200) {
       setError(data.data.message);
@@ -55,14 +58,19 @@ export default function ChallengeJoinModal({
 
     localStorage.setItem(contestId, "true");
     setIsOpen(false);
-    socket.emit("startTimer",timeLimit)
+    socket.emit("startTimer", timeLimit);
   };
 
   return (
     <Dialog open={isOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <p className="text-xl text-muted-foreground text-red-600">{error}</p>
+          <p className="text-xl text-muted-foreground text-red-600">
+            {error}{" "}
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+          </p>
 
           <DialogTitle>Join Challenge: {challengeName}</DialogTitle>
           <DialogDescription>

@@ -18,14 +18,18 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
 import { useToast } from "@/hooks/use-toast";
+import { useSearchParams } from 'next/navigation'
 
 export default function CreateContestPage() {
-  const [leetcodeUrl, setLeetcodeUrl] = useState("");
+  const searchParams = useSearchParams()
+  const query = searchParams.get('slug')
+  const [leetcodeUrl, setLeetcodeUrl] = useState(query?`https://leetcode.com/problems/${query}`:""); // Default value;
   const [contestDuration, setContestDuration] = useState("");
   const [sharingLink, setSharingLink] = useState("");
   const [isContestCreated, setIsContestCreated] = useState(false);
   const { user } = useUser();
   const { toast } = useToast();
+  
   const baseUrl =
   typeof window !== "undefined"
     ? `${window.location.protocol}//${window.location.host}`
@@ -81,6 +85,7 @@ export default function CreateContestPage() {
     return problemIndex !== -1 && urlParts[problemIndex + 1] ? urlParts[problemIndex + 1] : "";
   }
   
+  console.log(user?.id, "user id");
 
   const handleCreateContest = (e: React.FormEvent) => {
     e.preventDefault();

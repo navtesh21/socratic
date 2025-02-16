@@ -59,20 +59,10 @@ export default function ChallengeHeaderBar({
                 {formatTime(timeRemaining)}
               </span>
             </div>
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Button variant="outline" className="flex items-center">
+            <Button variant="outline" className="flex items-center">
                   <Trophy className="h-4 w-4 mr-2" />
-                  Submit
+                Best of Luck!
                   </Button>
-                  
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Pass all the testcases to submit the problem</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
           </div>
         </div>
         <Progress value={progressPercentage} className="mt-2" />

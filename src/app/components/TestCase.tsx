@@ -3,13 +3,17 @@ import React, { useEffect, useState } from 'react'
 import TestcaseEditor from './TestcaseEditor';
 import { executeCode } from '@/lib/actions';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Trophy } from 'lucide-react';
+import { useToast } from "@/hooks/use-toast";
+import { Socket } from 'socket.io-client';
+import { useUser } from '@clerk/nextjs';
 
 
-function TestCase({code,data}:{code:string,data:string}) {
+function TestCase({code,data,socket,setShowEndModal}:{code:string,data:string,socket:Socket,setShowEndModal:React.Dispatch<React.SetStateAction<{ show: boolean; message: string }>>}) {
     const [activeTestCase, setActiveTestCase] = useState<string | null>(null);
     const [codeRun, setCoderun] = useState<boolean>(false);
-    
-
+    const { user } = useUser();
+    const { toast } = useToast();
     const [testcases, setTestcases] = useState([{ TestCase: "" }]);
     const [testcasesNames, setTestcasesNames] = useState<string[]>([]);
     
@@ -61,6 +65,25 @@ function TestCase({code,data}:{code:string,data:string}) {
       return testCases;
     }
     
+    function checkTestsPassed(results: any): boolean {
+    
+      for (const result of results) {
+        if (result.status.id === 11) {
+          return false;
+        }
+    
+        if (result.stderr) {
+          return false;
+        }
+    
+        if (result.compile_output) {
+          return false;
+        }
+      }
+    
+      return true;
+    }
+    
     
      const handleTestCaseClick = (testCase: string) => {
         setActiveTestCase(testCase);
@@ -69,11 +92,28 @@ function TestCase({code,data}:{code:string,data:string}) {
       const [results, setResults] = useState<any[]>([]);
       console.log(results)
 
+      const submitCode = async () => {  
+           if(checkTestsPassed(results)){
+             console.log('All testcases passed')
+             console.log(socket.id)
+             socket.emit("passed",user?.id);
+             setShowEndModal({show:true,message:"You Won Congrats!"})
+             return
+      }
+
+      toast({
+        title: "Error",
+        description: "All testcases are not passed",
+      });
+      
+    }
+
       const compileCode = async () => {
         setCoderun(true);
         const testResults = await executeCode(code, testcases); 
         setResults(testResults);
         setTestcasesNames(testcasesNames.map((_, index) => `TestCase${index + 1} ${testResults[index]?.stderr ? "❌" : "✅"}`));
+        console.log(testcasesNames)
         setCoderun(false);
       };
     
@@ -91,6 +131,7 @@ function TestCase({code,data}:{code:string,data:string}) {
                   </Button>
                 ))}
               </div>
+              <div className='flex space-x-2'>
               <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
@@ -109,7 +150,21 @@ function TestCase({code,data}:{code:string,data:string}) {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
-              
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button variant="outline" className="flex items-center" onClick={() => submitCode()}>
+                  <Trophy className="h-4 w-4 mr-2" />
+                  Submit
+                  </Button>
+                  
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Pass all the testcases to submit the problem</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+              </div>
             </div>
             {activeTestCase && (
               <div className="px-2">

@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
+import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
 
 const HeroSection: React.FC = () => {
   return (
@@ -45,34 +47,38 @@ const HeroSection: React.FC = () => {
 
         <div className="mt-5 max-w-3xl text-center mx-auto">
           <p className="text-lg text-gray-600 dark:text-neutral-400">
-          Socratic is an AI-powered teaching assistant that helps students learn Data Structures and Algorithms through Socratic questioning, guiding them to discover solutions independently. It adapts to responses, creating a personalized learning experience.
-          </p>
+          Challenge your friends to real-time LeetCode battles. Create instant coding contests by sharing a simple URL and compete head-to-head to solve algorithmic problems within a time limit. </p>
         </div>
 
         {/* Buttons */}
         <div className="mt-8 gap-3 flex justify-center">
-          <Link
-            className="inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 hover:from-violet-600 hover:to-blue-600 border border-transparent text-white text-sm font-medium rounded-md focus:outline-none focus:from-violet-600 focus:to-blue-600 py-3 px-4"
-            href="/createChallenge"
-          >
-            Get Started By Creating a Contest
-            <svg
-              className="shrink-0 size-4"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m9 18 6-6-6-6" />
-            </svg>
-          </Link>
-         
-        </div>
+  <Link
+    className="inline-flex justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 hover:from-violet-600 hover:to-blue-600 border border-transparent text-white text-sm font-medium rounded-md focus:outline-none focus:from-violet-600 focus:to-blue-600 py-3 px-4"
+    href="/createChallenge"
+  >
+    Get Started By Creating a Contest
+    <svg
+      className="shrink-0 size-4"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m9 18 6-6-6-6" />
+    </svg>
+  </Link>
+  <Link
+    className="inline-flex justify-center items-center gap-x-3 text-center bg-white hover:bg-gray-50 border border-gray-200 text-gray-800 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 py-3 px-4"
+    href="/dasboard"
+  >
+    Dashboard
+  </Link>
+</div>
       
       </div>
     </div>
