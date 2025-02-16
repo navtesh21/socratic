@@ -67,6 +67,10 @@ function TestCase({code,data,socket,setShowEndModal}:{code:string,data:string,so
     
     function checkTestsPassed(results: any): boolean {
     
+      if(results.length === 0){
+        return false
+      }
+
       for (const result of results) {
         if (result.status.id === 11) {
           return false;
@@ -119,8 +123,8 @@ function TestCase({code,data,socket,setShowEndModal}:{code:string,data:string,so
     
   return (
     <div>
-        <div className="flex space-x-4 justify-between">
-              <div className="space-x-4">
+        <div className="flex space-x-4 justify-between max-lg:flex-col">
+              <div className="space-x-4 max-lg:mb-2">
                 {testcasesNames.map((testCase) => (
                   <Button
                     key={testCase}

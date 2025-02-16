@@ -103,7 +103,7 @@ function Page({ params }: { params: { id: string } }) {
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <div className="flex h-screen mt-16">
+    <div className="flex h-screen mt-16 max-lg:flex-col max-lg:h-full">
       {/* Problem Description Section */}
       {!showModal && (
         <TimerNavbar
@@ -135,14 +135,14 @@ function Page({ params }: { params: { id: string } }) {
           }}
         />
       )}
-      <ScrollArea className="h-[90vh] overflow-y-auto w-[45%] m-1">
+      <ScrollArea className="h-[90vh] overflow-y-auto w-[45%] m-1 max-lg:w-full">
         <div className="p-4 bg-background">
           <Problem data={data.data} />
         </div>
       </ScrollArea>
 
       {/* Code Editor and Test Cases Section */}
-      <div className="w-[55%] flex flex-col bg-muted h-full">
+      <div className="w-[55%] flex flex-col bg-muted h-full max-lg:w-full">
         <div className="flex-grow p-3">
           <div className="bg-background border rounded-md p-4 flex-col flex gap-4">
             <CodeEditorWindow onChange={onChange} code={code} />
