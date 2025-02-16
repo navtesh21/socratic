@@ -74,7 +74,7 @@ const HeroSection: React.FC = () => {
   </Link>
   <Link
     className="inline-flex justify-center items-center gap-x-3 text-center bg-white hover:bg-gray-50 border border-gray-200 text-gray-800 text-sm font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 py-3 px-4"
-    href="/dasboard"
+    href="/dashboard"
   >
     Dashboard
   </Link>
