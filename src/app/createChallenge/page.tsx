@@ -104,7 +104,7 @@ export default function CreateContestPage() {
   };
 
   return (
-    <div className="container mx-auto p-4 mt-11">
+    <div className="container mx-auto p-4 mt-24">
       <Card className="w-full max-w-md mx-auto bg-gradient-to-br from-gray-900 to-gray-800 shadow-lg hover:shadow-xl transition-shadow border border-gray-700">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-white flex items-center gap-2">

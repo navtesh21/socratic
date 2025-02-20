@@ -7,6 +7,7 @@ import { ModeToggle } from "@/components/ui/ModeToggle";
 import HeroSection from "@/components/ui/HeroSection";
 import HeroContinue from "@/components/ui/HeroContinue";
 import Problems from "@/components/ui/Problems";
+import Features from "@/components/ui/Features";
 
 
 export default function Home() {
@@ -17,7 +18,7 @@ export default function Home() {
       </div>
       {/* Features */}
       <div>
-        <HeroContinue/>
+        <Features />
       </div>
       <div className=" flex justify-center">
         <Problems/>

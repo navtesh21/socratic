@@ -36,11 +36,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <TenstackQuery>
-        <ClerkProvider>
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-          >
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <TenstackQuery> {/* ✅ Now inside <body>, which is valid */}
+          <ClerkProvider>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
@@ -67,9 +67,10 @@ export default function RootLayout({
               </footer>
               <Toaster />
             </ThemeProvider>
-          </body>
-        </ClerkProvider>
-      </TenstackQuery>
+          </ClerkProvider>
+        </TenstackQuery> {/* ✅ Correct placement */}
+      </body>
     </html>
   );
 }
+
