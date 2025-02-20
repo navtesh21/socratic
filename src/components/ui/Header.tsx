@@ -6,7 +6,7 @@ import { useTheme } from 'next-themes';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { theme } = useTheme(); // Get the current theme
+ 
   const { resolvedTheme } = useTheme();
   
 const [mounted, setMounted] = useState(false); 

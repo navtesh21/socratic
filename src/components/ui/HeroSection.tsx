@@ -57,7 +57,7 @@ useEffect(() => {
         <div className="mt-5 max-w-2xl text-center mx-auto">
           <h1 className="block font-bold text-gray-600 text-4xl md:text-5xl lg:text-6xl dark:text-neutral-200">
             Welcome To{' '}
-            <span className="text-gray-950 dark:text-blue-600 text-transparent">
+            <span className="text-gray-950 dark:text-blue-600 ">
               Socratic
             </span>
           </h1>
