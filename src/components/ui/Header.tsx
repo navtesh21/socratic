@@ -34,7 +34,7 @@ useEffect(() => {
             {mounted && (
               <img 
                 src={resolvedTheme === "dark" ? "/images/logo_dark.png" : "/images/logo.png"}
-                className="h-16 w-auto" 
+                className="h-12 w-auto" 
                 alt="Socratic Logo" 
               />
             )}
