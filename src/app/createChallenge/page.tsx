@@ -196,7 +196,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { InfoIcon, LinkIcon, CheckIcon } from "lucide-react";
+import { InfoIcon, LinkIcon, CheckIcon, ExternalLinkIcon } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
@@ -412,7 +412,7 @@ export default function CreateContestPage() {
               </div>
             </form>
 
-            {isContestCreated && (
+            {/* {isContestCreated && (
               <div className="mt-6 space-y-2">
                 <Label className="text-gray-700 font-medium dark:text-white">Sharing Link</Label>
                 <div className="flex items-center gap-2">
@@ -439,7 +439,43 @@ export default function CreateContestPage() {
                   Share this link with your friend to start the competition!
                 </p>
               </div>
-            )}
+            )} */}
+
+{isContestCreated && (
+  <div className="mt-6 space-y-2">
+    <Label className="text-gray-700 font-medium dark:text-white">Sharing Link</Label>
+    <div className="flex items-center gap-2">
+      <Input
+        value={sharingLink}
+        readOnly
+        className="bg-gray-50 dark:bg-neutral-800"
+      />
+      <Button
+        size="icon"
+        onClick={() => {
+          navigator.clipboard.writeText(sharingLink);
+          toast({
+            title: "Copied!",
+            description: "Link copied to clipboard",
+          });
+        }}
+        className="shrink-0"
+      >
+        <LinkIcon className="h-4 w-4" />
+      </Button>
+      <Button
+        size="icon"
+        onClick={() => window.open(sharingLink, '_blank')}
+        className="shrink-0"
+      >
+        <ExternalLinkIcon className="h-4 w-4" />
+      </Button>
+    </div>
+    <p className="text-sm text-gray-500 dark:text-neutral-500 text-center mt-3">
+      Share this link with your friend to start the competition!
+    </p>
+  </div>
+)}
           </div>
         </div>
       </div>
