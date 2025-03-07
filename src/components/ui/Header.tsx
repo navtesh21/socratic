@@ -44,9 +44,9 @@ useEffect(() => {
             <div className="hidden md:flex items-center space-x-6">
               <SignedOut>
                 <SignInButton>
-                  <button className="px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium hover:opacity-90 transition-opacity">
-                    Sign In
-                  </button>
+                <button type="button" className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 focus:outline-hidden focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">
+                  Sign In
+                </button>
                 </SignInButton>
               </SignedOut>
               <SignedIn>
@@ -101,9 +101,26 @@ useEffect(() => {
               
               {/* Top Row: UserButton (Left) & ModeToggle (Right) */}
               <div className="flex items-center justify-between px-2 pb-3 border-b border-gray-700">
-                <SignedIn>
-                  <UserButton afterSignOutUrl="/" />
-                </SignedIn>
+                {/* <SignedIn>
+                  <UserButton />
+                </SignedIn> */}
+                 <SignedOut>
+                <SignInButton>
+                <button type="button" className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 focus:outline-hidden focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">
+                  Sign In
+                </button>
+
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton 
+                  appearance={{
+                    elements: {
+                      avatarBox: "w-8 h-8"
+                    }
+                  }}
+                />
+              </SignedIn>
                 <div className="border border-gray-600 rounded-lg p-1 bg-gray-800 dark:bg-gray-700">
                   <ModeToggle />
                 </div>
