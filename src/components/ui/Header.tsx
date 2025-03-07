@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ModeToggle } from './ModeToggle';
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { useTheme } from 'next-themes';
+import { Divide } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -66,6 +67,31 @@ useEffect(() => {
             </div>
 
             {/* Mobile Menu Button */}
+            <div className='md:hidden p-2 flex'>
+              {!isMenuOpen && ( 
+                <>
+                <div className='flex'>
+                <SignedOut>
+                <SignInButton>
+                <button type="button" className="py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 focus:outline-hidden focus:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-400 dark:bg-blue-800/30 dark:hover:bg-blue-800/20 dark:focus:bg-blue-800/20">
+                  Sign In
+                </button>
+                </SignInButton>
+              </SignedOut>
+              <SignedIn>
+                <UserButton 
+                  appearance={{
+                    elements: {
+                      avatarBox: "w-8 h-8"
+                    }
+                  }}
+                />
+              </SignedIn>
+                </div>
+                
+                </>
+              )}
+           
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -93,6 +119,10 @@ useEffect(() => {
                 )}
               </svg>
             </button>
+            </div>
+           
+           
+           
           </div>
 
           {/* Mobile Menu */}
