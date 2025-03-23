@@ -116,7 +116,7 @@ function Chat() {
       
       // Using axios instead of fetch to help with CORS issues
       const response = await axios({
-        url: `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`,
+        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
         method: "post",
         data: {
           contents: [{ parts: [{ text: prompt }] }],
