@@ -273,7 +273,7 @@ export default function CreateContestPage() {
   };
 
   return (
-    <div className="max-w-[85rem] px-4 py-20 sm:px-6 lg:px-8 lg:py-20 mx-auto h-screen">
+    <div className="mb-[250px] max-w-[85rem] px-4 py-20 sm:px-6 lg:px-8 lg:py-20 mx-auto">
       <div className="grid md:grid-cols-2 items-center gap-12">
         {/* Left Column - Info */}
         <div>
