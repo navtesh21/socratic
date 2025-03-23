@@ -128,7 +128,7 @@ Please reply to the last user message.`
       {/* Increase max-width on larger screens and remove width constraints */}
       <SheetContent className="w-full sm:max-w-md md:max-w-lg lg:max-w-2xl xl:max-w-4xl p-0">
         <SheetHeader className="p-4 border-b">
-          <SheetTitle>Chat with Gemini AI</SheetTitle>
+          <SheetTitle>Chat with AI</SheetTitle>
         </SheetHeader>
         <div className="flex flex-col h-[calc(100vh-120px)]">
           <ScrollArea ref={scrollAreaRef} className="flex-grow py-4 px-4">
