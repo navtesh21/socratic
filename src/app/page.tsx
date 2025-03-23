@@ -8,6 +8,7 @@ import HeroSection from "@/components/ui/HeroSection";
 import HeroContinue from "@/components/ui/HeroContinue";
 import Problems from "@/components/ui/Problems";
 import Features from "@/components/ui/Features";
+import Head from 'next/head';
 
 import { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
@@ -30,6 +31,16 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 export default function Home() {
   return (
     <div className="">
+       <Head>
+       <link
+  rel="icon"
+  href="/icon?<generated>"
+  type="image/<generated>"
+  sizes="<generated>"
+/>
+
+        <title>Socratic App</title>
+      </Head>
       <div className="mt-[52px]">
       <HeroSection/>
       </div>
