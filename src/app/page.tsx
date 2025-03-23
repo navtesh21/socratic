@@ -9,6 +9,23 @@ import HeroContinue from "@/components/ui/HeroContinue";
 import Problems from "@/components/ui/Problems";
 import Features from "@/components/ui/Features";
 
+import { useState, useEffect, useRef } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
+import { Button } from "@/components/ui/button";
+import {
+    Card,
+    CardContent,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
+
 
 export default function Home() {
   return (
