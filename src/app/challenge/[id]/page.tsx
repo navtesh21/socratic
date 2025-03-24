@@ -1,6 +1,8 @@
 "use client";
 
 import Chat from "@/app/components/Chat";
+import Conf from "@/app/components/Conf";
+import Confetti from "@/app/components/Confetti";
 import CodeEditorWindow from "@/app/components/Editor";
 import ImageDialog from "@/app/components/ImageDialog";
 import ChallengeJoinModal from "@/app/components/JoinContestModal";
@@ -28,6 +30,7 @@ function Page({ params }: { params: { id: string } }) {
     show: false,
     message: "",
   });
+  const [isVisible, setIsVisible] = useState(false);
 
   const socket = useMemo(() => {
     const socketInstance = getSocket();
@@ -102,6 +105,8 @@ function Page({ params }: { params: { id: string } }) {
   };
   if (!isLoaded) return <div>Loading...</div>;
 
+  console.log("visi", isVisible);
+
   return (
     <div className="flex h-screen mt-16 max-lg:flex-col max-lg:h-full">
       {/* Problem Description Section */}
@@ -111,6 +116,7 @@ function Page({ params }: { params: { id: string } }) {
           challengeName={data.data?.title}
           userName={user?.firstName!}
           timeLimit={parseInt(data.data?.time_limit) * 60}
+          setVisibility={setIsVisible}
         />
       )}
       <ChallengeJoinModal
@@ -135,6 +141,9 @@ function Page({ params }: { params: { id: string } }) {
           }}
         />
       )}
+
+      {isVisible && <Conf />}
+
       <ScrollArea className="h-[90vh] overflow-y-auto w-[50%] m-1 max-lg:w-full ">
         <div className="p-4 bg-background ">
           <Problem data={data.data} />
@@ -152,6 +161,7 @@ function Page({ params }: { params: { id: string } }) {
               data={data.data}
               socket={socket}
               setShowEndModal={setShowEndModal}
+              setVisibility={setIsVisible}
             />
           </div>
         </div>

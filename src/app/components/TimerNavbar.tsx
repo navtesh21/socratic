@@ -10,6 +10,7 @@ interface ChallengeHeaderBarProps {
   challengeName: string;
   userName: string;
   timeLimit: number;
+  setVisibility?: (isVisible: boolean) => void;
 }
 
 export default function ChallengeHeaderBar({
@@ -17,6 +18,7 @@ export default function ChallengeHeaderBar({
   challengeName,
   userName,
   timeLimit,
+  setVisibility
 }: ChallengeHeaderBarProps) {
   const [timeRemaining, setTimeRemaining] = useState(totalTime);
 
@@ -61,7 +63,15 @@ export default function ChallengeHeaderBar({
             </div>
 
             {/* Best of Luck Button */}
-            <Button variant="outline" className="text-xs sm:text-sm flex items-center px-2 sm:px-4 py-1">
+            <Button variant="outline" className="text-xs sm:text-sm flex items-center px-2 sm:px-4 py-1" onClick={() => 
+              {
+                setVisibility?.(true)
+                setTimeout(() => {
+                  setVisibility?.(false)
+                }, 10000)
+              }
+              
+             }>
               <Trophy className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
               Best of Luck!
             </Button>

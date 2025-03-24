@@ -18,6 +18,7 @@ function TestCase({
   data,
   socket,
   setShowEndModal,
+  setVisibility,
 }: {
   code: string;
   data: any;
@@ -25,6 +26,7 @@ function TestCase({
   setShowEndModal: React.Dispatch<
     React.SetStateAction<{ show: boolean; message: string }>
   >;
+  setVisibility: (isVisible: boolean) => void;
 }) {
   const [activeTestCase, setActiveTestCase] = useState<string | null>(null);
   const [codeRun, setCoderun] = useState<boolean>(false);
@@ -142,6 +144,7 @@ function TestCase({
       console.log("All testcases passed");
       console.log(socket.id);
       socket.emit("passed", user?.id);
+      setVisibility?.(true);
       setShowEndModal({ show: true, message: "You Won Congrats!" });
       return;
     }
