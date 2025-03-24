@@ -28,7 +28,7 @@ function Problem({data}: {data: any}) {
           <FileText className="mr-2 h-6 w-6 text-primary" />
           Problem Statement
         </h2>
-        <div className="w-full" dangerouslySetInnerHTML={createMarkup(data?.content)} />
+        <div className="w-full pr-5" dangerouslySetInnerHTML={createMarkup(data?.content)} />
       </div>
 
      
