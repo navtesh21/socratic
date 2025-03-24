@@ -157,7 +157,7 @@ function Page({ params }: { params: { id: string } }) {
         </div>
       </div>
 
-      <Chat />
+      <Chat data={data.data} />
     </div>
   );
 }

@@ -35,7 +35,19 @@ function TestCase({code,data,socket,setShowEndModal}:{code:string,data:string,so
       codeInfo: { lang: string; langSlug: string; code: string }
     ): { TestCase: string }[] {
       const testCases: { TestCase: string }[] = [];
-      const exampleRegex = /<pre>[\s\S]*?<strong>Input:<\/strong>\s*([\s\S]*?)\s*<strong>Output:<\/strong>\s*([\s\S]*?)<\/pre>/g;
+    
+      // Function to decode HTML entities
+      function decodeHtmlEntities(str: string): string {
+        return str
+          .replace(/&quot;/g, '"')
+          .replace(/&gt;/g, '>')
+          .replace(/&lt;/g, '<')
+          .replace(/&amp;/g, '&');
+      }
+    
+      // Regular expression to capture input-output pairs from examples
+      const exampleRegex =
+        /<pre>\s*<strong>Input:<\/strong>\s*([\s\S]*?)\s*<strong>Output:<\/strong>\s*([\s\S]*?)<\/pre>/g;
     
       // Extract function name from the given Python code
       const functionNameMatch = codeInfo.code.match(/def (\w+)\(/);
@@ -46,24 +58,37 @@ function TestCase({code,data,socket,setShowEndModal}:{code:string,data:string,so
         let inputRaw = match[1].trim();
         let outputRaw = match[2].trim();
     
-        // Remove any additional text after the output value (like explanations)
-        outputRaw = outputRaw.split("\n")[0].trim(); // Keep only the first line
+        // Decode HTML entities
+        inputRaw = decodeHtmlEntities(inputRaw);
+        outputRaw = decodeHtmlEntities(outputRaw);
+    
+        // Remove any comments or explanations after the expected output
+        outputRaw = outputRaw.split("\n")[0].trim();
     
         // Convert JavaScript-style `true` / `false` to Python `True` / `False`
         if (outputRaw.toLowerCase() === "true") outputRaw = "True";
         if (outputRaw.toLowerCase() === "false") outputRaw = "False";
     
-        // Extract the actual function argument
-        const inputMatch = inputRaw.match(/= (.*)$/);
-        const inputValue = inputMatch ? inputMatch[1].trim() : inputRaw;
+        // Extract variables correctly while handling edge cases
+        const inputVars: string[] = [];
+        const inputRegex = /\b(\w+)\s*=\s*("[^"]*"|\d+)/g;
+        let varMatch;
+        while ((varMatch = inputRegex.exec(inputRaw)) !== null) {
+          inputVars.push(varMatch[2]); // Extract variable values
+        }
     
-        // Generate the correct Python assertion for test cases
-        const testCase = `assert Solution().${functionName}(${inputValue}) == ${outputRaw}`;
+        // Generate the Python assertion for test cases
+        const testCase = `assert Solution().${functionName}(${inputVars.join(
+          ", "
+        )}) == ${outputRaw}`;
+        
         testCases.push({ TestCase: testCase });
       }
     
       return testCases;
     }
+    
+    
     
     function checkTestsPassed(results: any): boolean {
     
