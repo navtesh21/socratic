@@ -1,20 +1,39 @@
 import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
 
 export async function POST(req: NextRequest) {
   if (!req.body) {
     throw new Error("Request body is null");
   }
-  const { contestId } = await req.json();
-  console.log(contestId, "contestId");
-  const data = await axios.post(`${process.env.URL || "http://localhost:8000"}/getQuest`,{
-    questId: contestId
-  })
-  if(!data.data.data.question_slug){
-    return NextResponse.json({},{status:404});
+  const { contestId, slug: slugParam } = await req.json();
+  const questId = contestId ?? slugParam;
+  console.log(questId, "contestId");
+
+  let quest;
+  try {
+    const questRes = await fetch(
+      `${process.env.URL || "http://localhost:8000"}/getQuest`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ questId }),
+      }
+    );
+    if (!questRes.ok) {
+      console.log("getQuest failed", questRes.status);
+      return NextResponse.json({}, { status: 502 });
+    }
+    quest = await questRes.json();
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({}, { status: 502 });
   }
-  const slug= await data.data.data.question_slug
-  console.log(slug, "slug")
+
+  const slug = quest?.data?.question_slug;
+  if (!slug) {
+    return NextResponse.json({}, { status: 404 });
+  }
+  console.log(slug, "slug");
+
   const query = `
   query getProblemDetails($titleSlug: String!) {
     question(titleSlug: $titleSlug) {
@@ -61,32 +80,31 @@ export async function POST(req: NextRequest) {
   }
 `;
   const variables = {
-    titleSlug: slug, 
+    titleSlug: slug,
   };
 
   try {
-    const res = await axios.post(
-      "https://leetcode.com/graphql",
-      {
-        query: query,
-        variables: variables,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await fetch("https://leetcode.com/graphql", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query, variables }),
+    });
+    if (!res.ok) {
+      console.log("leetcode graphql failed", res.status);
+      return NextResponse.json({}, { status: 502 });
+    }
+    const json = await res.json();
 
-
-    if(!res.data.data.question){
-      return NextResponse.json({},{status:404});
+    if (!json?.data?.question) {
+      return NextResponse.json({}, { status: 404 });
     }
 
-  return NextResponse.json({...res.data.data.question,...data.data.data}, { status: 200 });
+    return NextResponse.json(
+      { ...json.data.question, ...quest.data },
+      { status: 200 }
+    );
   } catch (error) {
     console.log(error);
-
-    throw new Error("Error fetching data");
+    return NextResponse.json({}, { status: 502 });
   }
 }
